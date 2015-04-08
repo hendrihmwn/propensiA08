@@ -1,0 +1,9 @@
+Options All -Indexes
+# Special for Uniform Server Development Only!!!
+Options +FollowSymLinks -Indexes
+
+# Rewrite Router to Bootstrap File (index.php)
+RewriteEngine on
+RewriteCond %{SCRIPT_FILENAME} !-f
+RewriteCond %{SCRIPT_FILENAME} !-d
+RewriteRule ^(.*)$ index.php/$1
