@@ -54,7 +54,7 @@ class ActionColumn extends Column
      *
      * @see buttons
      */
-    public $template = '{view} {update} {delete}';
+    public $template = '{view} {update} {delete} {reset}';
     /**
      * @var array button rendering callbacks. The array keys are the button names (without curly brackets),
      * and the values are the corresponding button rendering callbacks. The callbacks should use the following
@@ -126,6 +126,18 @@ class ActionColumn extends Column
                     'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
                     'data-method' => 'post',
                     'data-pjax' => '0',
+                    'onclick' => 'return confirm(\'Are you sure you want to delete?\')',
+                ]);
+            };
+        }
+        if (!isset($this->buttons['reset'])) {
+            $this->buttons['reset'] = function ($url, $model, $key) {
+                return Html::a('<span class="glyphicon glyphicon-refresh"></span>', $url, [
+                    'title' => Yii::t('yii', 'Reset'),
+                    'data-confirm' => Yii::t('yii', 'Are you sure you want to reset this item?'),
+                    'data-method' => 'post',
+                    'data-pjax' => '0',
+                    'onclick' => 'return confirm(\'Are you sure you want to reset?\')',
                 ]);
             };
         }
