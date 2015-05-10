@@ -14,45 +14,104 @@ AppAsset::register($this);
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
 <head>
-    <meta charset="<?= Yii::$app->charset ?>"/>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <?= Html::csrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?></title>
-    <?php $this->head() ?>
+    <meta name="description" content="">
+    <meta name="author" content="Propensi A08 2015">
+
+    <title>PT. Usbersa Mitra Logam</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="<?= Yii::$app->params['base']?>views/layouts/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="<?= yii::$app->params['base']?>views/layouts/css/plugins/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="<?= yii::$app->params['base']?>views/layouts/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="<?= yii::$app->params['base']?>views/layouts/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
 </head>
 <body>
 
 <?php $this->beginBody() ?>
-    <div class="wrap">
-        <?php
-            NavBar::begin([
-                'brandLabel' => 'My Company',
-                'brandUrl' => Yii::$app->homeUrl,
-                'options' => [
-                    'class' => 'navbar-inverse navbar-fixed-top',
-                ],
-            ]);
-            echo Nav::widget([
-                'options' => ['class' => 'navbar-nav navbar-right'],
-                'items' => [
-                    ['label' => 'Home', 'url' => ['/site/index']],
-                    ['label' => 'About', 'url' => ['/site/about']],
-                    ['label' => 'Contact', 'url' => ['/site/contact']],
-                    Yii::$app->user->isGuest ?
-                        ['label' => 'Login', 'url' => ['/site/login']] :
-                        ['label' => 'Logout (' . Yii::$app->user->identity->username . ')',
-                            'url' => ['/site/logout'],
-                            'linkOptions' => ['data-method' => 'post']],
-                ],
-            ]);
-            NavBar::end();
-        ?>
+    <div id="wrapper" class="wrap">
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            
+            <!--navbar mobile-->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.php"><img src="<?= Yii::$app->params['base']?>views/layouts/image/logo copy.png" style="width:90px;"></img>  Sistem Informasi Inventory PT. Usbersa Mitra Logam</a>
+            </div>
+            <!-- end navbar mobile -->
 
-        <div class="container">
-            <?= Breadcrumbs::widget([
-                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-            ]) ?>
-            <?= $content ?>
+            <!--Navbar atas-->
+            
+            <ul class="nav navbar-top-links navbar-right">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-fw"></i> <?= Yii::$app->user->identity->username ?> <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="<?= Yii::$app->params['base']?>web/akun/changepassword?id=<?= Yii::$app->user->identity->id ?>"><i class="fa fa-gear fa-fw"></i> Ubah Password</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="<?= Yii::$app->params['base']?>web/login/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+
+            </ul>
+            <!-- end navbar atas -->
+            
+            <!--Navbar samping-->
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li>
+                            <a href="<?= Yii::$app->params['base']?>web/"><i class="fa fa-user fa-fw"></i>Home<span class="fa "></span></a>
+                
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- end navbar samping-->
+            
+        </nav><!-- end Navigasi -->
+
+
+        
+            <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel-heading">
+                       
+                    </div>
+                    <div class="panel-body">
+                        <?= Breadcrumbs::widget([
+                            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                        ]) ?>
+                        <?= $content ?>
+                    </div>
+                </div>
+            </div>
+         
         </div>
     </div>
 
@@ -61,8 +120,17 @@ AppAsset::register($this);
             <p class="pull-left">&copy; PT. Usbersa Mitra Logam <?= date('Y') ?></p>
         </div>
     </footer>
+    <script src="<?= yii::$app->params['base']?>views/layouts/js/jquery-1.11.0.js"></script>
 
-<?php $this->endBody() ?>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="<?= yii::$app->params['base']?>views/layouts/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="<?= yii::$app->params['base']?>views/layouts/js/plugins/metisMenu/metisMenu.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="<?= yii::$app->params['base']?>views/layouts/js/sb-admin-2.js"></script>
+
 </body>
 </html>
 <?php $this->endPage() ?>

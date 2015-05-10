@@ -28,19 +28,46 @@ $this->params['breadcrumbs'][] = $this->title;
             echo '</div>';
         ?>
 
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id_product',
-            'kode',
-            'nama',
-            'tebal',
-            'jenis_plat',
-
-            ['class' => 'yii\grid\ActionColumn', 'template' => '{delete}'],
-        ],
-    ]); ?>
+    
 
 </div>
+ <table class='table table-striped'>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Kode</th>
+                <th>Nama</th>
+       
+                <th>Panjang</th>
+                <th>Lebar</th>
+                <th>Berat</th>
+                 <th>Delete</th>
+            </tr>
+        </thead>
+        
+        <tbody>
+            <?php 
+            $i=1;
+            
+            foreach($data as $row){ ?>
+                <tr>
+                    <td><?php echo $i; ?></td>
+                    <td><?= $row->kode ?></td>
+                    <td><?= $row->nama ?></td>
+                   
+                    <td><?= $row->panjang ?></td>
+                    <td><?= $row->lebar ?></td>
+                    <td><?= $row->berat ?></td>
+                    <td>
+                        
+                       
+                        <a href="<?php echo Yii::$app->params['base']?>web/product/delete?id=<?php echo $row->id_product ?>" onClick="return confirm('Are you sure you want to delete?')">
+                            <span class='glyphicon glyphicon-trash' aria-hidden='true'></span>
+                        </a>
+                      
+                    </td>
+                </tr>
+            <?php 
+            $i++;} ?>
+        </tbody>
+    </table>

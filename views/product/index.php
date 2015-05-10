@@ -10,31 +10,47 @@ use yii\grid\GridView;
 $this->title = 'Products';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="product-index">
+<div class="product-index body-new">
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Product', ['create'], ['class' => 'btn btn-outline btn-primary']) ?>
-        <?= Html::a('Update Product', ['updatepage'], ['class' => 'btn btn-outline btn-primary']) ?>
-        <?= Html::a('Delete Product', ['deletepage'], ['class' => 'btn btn-outline btn-primary']) ?>
+        <?= Html::a('<i class="fa fa-plus"></i> Create Product', ['create'], ['class' => 'btn btn-new btn-success']) ?>
     </p>
+
+     <?php
+            if(!empty($_GET['create'])) { 
+                echo '<div class="alert alert-success font-alert">';
+                echo 'Product ';echo $_GET['create'];echo ' sukses dibuat!'; ?> <i class="fa fa-check-circle fa-lg"></i> <br><br><a class="btn btn-new btn-success btn-sm" href="<?php echo Yii::$app->params['base']?>web/product"?>OK</a> <?php echo '</div>';
+
+            }
+            if(!empty($_GET['update'])) { 
+                echo '<div class="alert alert-success font-alert">';
+                echo 'Product ';echo $_GET['update'];echo ' sukses diupdate!'; ?> <i class="fa fa-check-circle fa-lg"></i><br><br><a class="btn btn-new btn-success btn-sm" href="<?php echo Yii::$app->params['base']?>web/product"?>OK</a> <?php  echo '</div>';
+            }
+            if(!empty($_GET['delete'])) { 
+                echo '<div class="alert alert-success font-alert">';
+                echo 'Product ';echo $_GET['delete']; echo ' sukses dihapus!'; ?> <i class="fa fa-check-circle fa-lg"></i><br><br><a class="btn btn-new btn-success btn-sm" href="<?php echo Yii::$app->params['base']?>web/product"?>OK</a> <?php echo '</div>';
+            }
+        ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+    //    'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id_product',
+            //'id_product',
             'kode',
             'nama',
-            'package',
+            //'package',
             'panjang',
-            // 'lebar',
-            // 'berat',
-            ['class' => 'yii\grid\ActionColumn'],
+            'lebar',
+            'berat',
+            // 'flag',
+
+            ['class' => 'yii\grid\ActionColumn', 'template' => '{view} {update} {delete}'],
         ],
     ]); ?>
 

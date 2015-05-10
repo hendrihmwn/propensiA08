@@ -8,20 +8,21 @@ use app\models\ProductSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\data\ActiveDataProvider;
 
 /**
  * ProductController implements the CRUD actions for Product model.
  */
 class ProductController extends Controller
 {
-    public $layout = "user";
+    public $layout = 'user';
     public function behaviors()
     {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['post'],
+                    'delete' => ['get'],
                 ],
             ],
         ];
@@ -33,11 +34,19 @@ class ProductController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new ProductSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        if(Yii::$app->user->isGuest){
+               return $this->redirect(Yii::$app->params['base'].'web');
+            } 
+        if(Yii::$app->user->identity->role != 'user'){
+               return $this->redirect(Yii::$app->params['base'].'web');
+            }
+       $query = Product::find()->select('*')
+                                ->where(['flag'=>1, 'package'=>1]);
+        $dataProvider = new ActiveDataProvider(['query'=>$query,
+            'sort'=> ['defaultOrder' => ['id_product'=>SORT_DESC]]]);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
+        //  'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
@@ -49,6 +58,12 @@ class ProductController extends Controller
      */
     public function actionView($id)
     {
+        if(Yii::$app->user->isGuest){
+               return $this->redirect(Yii::$app->params['base'].'web');
+            } 
+        if(Yii::$app->user->identity->role != 'user'){
+               return $this->redirect(Yii::$app->params['base'].'web');
+            }
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -61,10 +76,18 @@ class ProductController extends Controller
      */
     public function actionCreate()
     {
+        if(Yii::$app->user->isGuest){
+               return $this->redirect(Yii::$app->params['base'].'web');
+            } 
+        if(Yii::$app->user->identity->role != 'user'){
+               return $this->redirect(Yii::$app->params['base'].'web');
+            }
         $model = new Product();
+        $model->flag = 1;
+        $model->package = 1;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_product]);
+            return $this->redirect(['inventory_product/createproduct', 'id' => $model->id_product, 'nama' => $model->nama]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -80,10 +103,16 @@ class ProductController extends Controller
      */
     public function actionUpdate($id)
     {
+        if(Yii::$app->user->isGuest){
+               return $this->redirect(Yii::$app->params['base'].'web');
+            } 
+        if(Yii::$app->user->identity->role != 'user'){
+               return $this->redirect(Yii::$app->params['base'].'web');
+            }
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_product]);
+            return $this->redirect(['index', 'update' => $model->nama]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -99,9 +128,22 @@ class ProductController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if(Yii::$app->user->isGuest){
+               return $this->redirect(Yii::$app->params['base'].'web');
+            } 
+        if(Yii::$app->user->identity->role != 'user'){
+               return $this->redirect(Yii::$app->params['base'].'web');
+            }
 
-        return $this->redirect(['index']);
+        $model = $this->findModel($id);
+       Yii::$app->db->createCommand()
+            ->update('product', [
+                
+                'flag' => 0,
+            ],['id_product'=>$id])
+            ->execute();
+
+        return $this->redirect(['index', 'delete' => $model->nama]);
     }
 
     /**
@@ -113,6 +155,12 @@ class ProductController extends Controller
      */
     protected function findModel($id)
     {
+        if(Yii::$app->user->isGuest){
+               return $this->redirect(Yii::$app->params['base'].'web');
+            } 
+        if(Yii::$app->user->identity->role != 'user'){
+               return $this->redirect(Yii::$app->params['base'].'web');
+            }
         if (($model = Product::findOne($id)) !== null) {
             return $model;
         } else {

@@ -29,6 +29,8 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'berat') ?>
 
+    <?php // echo $form->field($model, 'flag') ?>
+
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
         <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>

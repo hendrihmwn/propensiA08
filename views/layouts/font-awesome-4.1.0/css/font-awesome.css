@@ -737,7 +737,8 @@
   content: "\f0ca";
 }
 .fa-list-ol:before {
-  content: "\f0cb";
+  content: "\f0cb"
+  \
 }
 .fa-strikethrough:before {
   content: "\f0cc";
