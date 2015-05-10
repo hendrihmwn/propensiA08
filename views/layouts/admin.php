@@ -32,6 +32,8 @@ AppAsset::register($this);
 
     <!-- Custom Fonts -->
     <link href="<?= yii::$app->params['base']?>views/layouts/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Signika' rel='stylesheet' type='text/css'>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -47,7 +49,7 @@ AppAsset::register($this);
     <div id="wrapper">
 
         <!-- Navigation -->
-        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <nav class="navbar navbar-default navbar-new navbar-static-top" role="navigation" style="margin-bottom: 0">
         	
         	<!--navbar mobile-->
             <div class="navbar-header">
@@ -57,82 +59,22 @@ AppAsset::register($this);
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.php"><img src="<?= Yii::$app->params['base']?>views/layouts/image/logo copy.png" style="width:90px;"></img>  Sistem Informasi Inventory PT. Usbersa Mitra Logam</a>
+                <a class="navbar-brandnew nav" href="index.php"><img src="<?= Yii::$app->params['base']?>views/layouts/image/logo copy.png" style="width:90px;"></img>  SISTEM INFORMASI INVENTORY PT. USBERSA MITRA LOGAM</a>
             </div>
             <!-- end navbar mobile -->
 
 			<!--Navbar atas-->
 			
             <ul class="nav navbar-top-links navbar-right">
-				<li class="dropdown">
+		       	<li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-alerts">
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-comment fa-fw"></i> New Comment
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-twitter fa-fw"></i> 3 New Followers
-                                    <span class="pull-right text-muted small">12 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-envelope fa-fw"></i> Message Sent
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-tasks fa-fw"></i> New Task
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-upload fa-fw"></i> Server Rebooted
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a class="text-center" href="#">
-                                <strong>See All Alerts</strong>
-                                <i class="fa fa-angle-right"></i>
-                            </a>
-                        </li>
-                    </ul>
-                    <!-- /.dropdown-alerts -->
-                </li>
-
-            	<li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-user fa-fw"></i> User 01 <i class="fa fa-caret-down"></i>
+                        <i class="fa fa-user fa-fw"></i> <?= Yii::$app->user->identity->username ?> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Ubah Password</a>
+                        <li><a href="<?= Yii::$app->params['base']?>web/akun/changepassword?id=<?= Yii::$app->user->identity->id ?>"><i class="fa fa-gear fa-fw"></i> Ubah Password</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="<?= Yii::$app->params['base']?>web/login/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -142,65 +84,14 @@ AppAsset::register($this);
             <!-- end navbar atas -->
 			
 			<!--Navbar samping-->
-            <div class="navbar-default sidebar" role="navigation">
+            <div class="navbar-defaultnew sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
-                        <li>
-							<a class="active" href="index.php"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
-						</li>
-						<li>
-                            <a href="#"><i class="fa fa-edit fa-fw"></i> Transaksi<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="flot.html">Pembelian Material</a>
-                                </li>
-                                <li>
-                                    <a href="morris.html">Produksi 1</a>
-                                </li>
-								<li>
-                                    <a href="morris.html">Produksi 2</a>
-                                </li>
-								<li>
-                                    <a href="morris.html">Penjualan</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
+                         <li>
+                            <a href="<?= Yii::$app->params['base']?>web"><i class="fa fa-dashboard fa-fw"></i> Home</a>
                         </li>
-						
 						<li>
-                            <a href="#"><i class="fa fa-table fa-fw"></i> Data Barang<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="flot.html">Material</a>
-                                </li>
-                                <li>
-                                    <a href="morris.html">Half Product</a>
-                                </li>
-								<li>
-                                    <a href="morris.html">Product</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>			
-						<li>
-							<a href="contact.php"><i class="fa fa-bar-chart-o fa-fw"></i> Inventory<span class="fa "></span></a>
-				
-						</li>
-						<li>
-                            <a href="#"><i class="fa fa-table fa-fw"></i> Partner<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="flot.html">Supplier</a>
-                                </li>
-                                <li>
-                                    <a href="morris.html">Client</a>
-                                </li>
-								
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>	
-						<li>
-							<a href="contact.php"><i class="fa fa-edit fa-fw"></i> Pesan<span class="fa "></span></a>
+							<a href="<?= Yii::$app->params['base']?>web/akun"><i class="fa fa-user fa-fw"></i> Accounts<span class="fa "></span></a>
 				
 						</li>
 					</ul>
@@ -247,6 +138,3 @@ AppAsset::register($this);
     <script src="<?= yii::$app->params['base']?>views/layouts/js/sb-admin-2.js"></script>
 
 </body>
-
-
-

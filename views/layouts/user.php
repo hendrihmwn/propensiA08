@@ -9,11 +9,13 @@ use app\assets\AppAsset;
 /* @var $content string */
 
 AppAsset::register($this);
-?>
 
+?>
+<?php $this->beginPage() ?>
+<html lang="<?= Yii::$app->language ?>">
 <head>
 
-    <meta charset="utf-8">
+    <meta charset="<?= Yii::$app->charset ?>"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
@@ -32,7 +34,8 @@ AppAsset::register($this);
 
     <!-- Custom Fonts -->
     <link href="<?= yii::$app->params['base']?>views/layouts/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Signika' rel='stylesheet' type='text/css'>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -42,14 +45,20 @@ AppAsset::register($this);
 
 </head>
 
+<style>
+body{
+    font-size: :30px;
+}
+</style>
+
 <body>
 
     <div id="wrapper">
 
         <!-- Navigation -->
-        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-        	
-        	<!--navbar mobile-->
+        <nav class="navbar navbar-default navbar-new navbar-static-top" role="navigation" style="margin-bottom: 0">
+            
+            <!--navbar mobile-->
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
@@ -57,14 +66,14 @@ AppAsset::register($this);
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.php"><img src="<?= Yii::$app->params['base']?>views/layouts/image/logo copy.png" style="width:90px;"></img>  Sistem Informasi Inventory PT. Usbersa Mitra Logam</a>
+                <a class="navbar-brandnew nav" href="index.php"><img src="<?= Yii::$app->params['base']?>views/layouts/image/logo copy.png" style="width:90px;"></img>  SISTEM INFORMASI INVENTORY PT. USBERSA MITRA LOGAM</a>
             </div>
             <!-- end navbar mobile -->
 
-			<!--Navbar atas-->
-			
+            <!--Navbar atas-->
+            
             <ul class="nav navbar-top-links navbar-right">
-				<li class="dropdown">
+                <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
@@ -124,15 +133,15 @@ AppAsset::register($this);
                     <!-- /.dropdown-alerts -->
                 </li>
 
-            	<li class="dropdown">
+                <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-user fa-fw"></i> User 01 <i class="fa fa-caret-down"></i>
+                        <i class="fa fa-user fa-fw"></i> <?= Yii::$app->user->identity->username ?> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Ubah Password</a>
+                        <li><a href="<?= Yii::$app->params['base']?>web/changepassword?id=<?= Yii::$app->user->identity->id ?>"><i class="fa fa-gear fa-fw"></i> Ubah Password</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="<?= Yii::$app->params['base']?>web/login/logout"><i class="fa fa-sign-out fa-fw"></i> Logout </a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -140,70 +149,70 @@ AppAsset::register($this);
 
             </ul>
             <!-- end navbar atas -->
-			
-			<!--Navbar samping-->
-            <div class="navbar-default sidebar" role="navigation">
+            
+            <!--Navbar samping-->
+            <div class="navbar-defaultnew sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li>
-							<a class="active" href="index.php"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
-						</li>
-						<li>
-                            <a href="#"><i class="fa fa-edit fa-fw"></i> Transaksi<span class="fa arrow"></span></a>
+                            <a href="<?= Yii::$app->params['base']?>web"><i class="fa fa-dashboard fa-fw"></i> Home</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-star fa-fw"></i> Transaksi<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
                                     <a href="flot.html">Pembelian Material</a>
                                 </li>
                                 <li>
-                                    <a href="morris.html">Produksi 1</a>
+                                    <a href="<?= Yii::$app->params['base']?>web/produksi1">Pengolahan Material</a>
                                 </li>
-								<li>
-                                    <a href="morris.html">Produksi 2</a>
+                                <li>
+                                    <a href="<?= Yii::$app->params['base']?>web/produksi2">Pengolahan Half-Product</a>
                                 </li>
-								<li>
+                                <li>
                                     <a href="morris.html">Penjualan</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
-						
-						<li>
+                        
+                        <li>
                             <a href="#"><i class="fa fa-table fa-fw"></i> Data Barang<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="flot.html">Material</a>
+                                    <a href="<?= Yii::$app->params['base']?>web/material">Material</a>
                                 </li>
                                 <li>
-                                    <a href="morris.html">Half Product</a>
+                                     <a href="<?= Yii::$app->params['base']?>web/halfproduct">Half-Product</a>
                                 </li>
-								<li>
-                                    <a href="morris.html">Product</a>
+                                <li>
+                                    <a href="<?= Yii::$app->params['base']?>web/product">Product</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
-                        </li>			
-						<li>
-							<a href="contact.php"><i class="fa fa-bar-chart-o fa-fw"></i> Inventory<span class="fa "></span></a>
-				
-						</li>
-						<li>
+                        </li>           
+                        <li>
+                            <a href="contact.php"><i class="fa fa-bar-chart-o fa-fw"></i> Inventory<span class="fa "></span></a>
+                
+                        </li>
+                        <li>
                             <a href="#"><i class="fa fa-table fa-fw"></i> Partner<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="flot.html">Supplier</a>
+                                    <a href="<?= Yii::$app->params['base']?>web/supplier">Supplier</a>
                                 </li>
                                 <li>
-                                    <a href="morris.html">Client</a>
+                                    <a href="<?= Yii::$app->params['base']?>web/client">Client</a>
                                 </li>
-								
+                                
                             </ul>
                             <!-- /.nav-second-level -->
-                        </li>	
-						<li>
-							<a href="contact.php"><i class="fa fa-edit fa-fw"></i> Pesan<span class="fa "></span></a>
-				
-						</li>
-					</ul>
+                        </li>   
+                        <li>
+                            <a href="contact.php"><i class="fa fa-edit fa-fw"></i> Pesan<span class="fa "></span></a>
+                
+                        </li>
+                    </ul>
                 </div>
             </div>
             <!-- end navbar samping-->
@@ -226,7 +235,7 @@ AppAsset::register($this);
                 </div>
             </div>
          </div>
-		<footer class="footer">
+        <footer class="footer">
         <div class="container">
             <p class="pull-left">&copy; PT. Usbersa Mitra Logam <?= date('Y') ?></p>
         </div>
@@ -247,6 +256,7 @@ AppAsset::register($this);
     <script src="<?= yii::$app->params['base']?>views/layouts/js/sb-admin-2.js"></script>
 
 </body>
-
+</html>
+<?php $this->endPage() ?>
 
 

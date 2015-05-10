@@ -6,22 +6,23 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Akun */
 
-$this->title = $model->id_akun;
+$this->title = $model->username;
 $this->params['breadcrumbs'][] = ['label' => 'Akuns', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="akun-view">
+<div class="akun-view body-new">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id_akun], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id_akun], [
-            'class' => 'btn btn-danger',
+    
+        <?= Html::a('<i class="fa fa-trash-o"></i> Delete', ['delete', 'id' => $model->id_akun], [
+            'class' => 'btn btn-dangernew btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
+                'onClick' => "return confirm('Are you sure you want to delete this item?')",
+                'method' => 'get',
             ],
+            'onClick'=> "return confirm('Are you sure you want to delete this item?')",
         ]) ?>
     </p>
 
@@ -32,6 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'username',
             'password',
             'role',
+            'flag',
         ],
     ]) ?>
 

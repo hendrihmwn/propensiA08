@@ -18,7 +18,7 @@ class AkunSearch extends Akun
     public function rules()
     {
         return [
-            [['id_akun'], 'integer'],
+            [['id_akun', 'flag'], 'integer'],
             [['username', 'password', 'role'], 'safe'],
         ];
     }
@@ -57,6 +57,7 @@ class AkunSearch extends Akun
 
         $query->andFilterWhere([
             'id_akun' => $this->id_akun,
+            'flag' => $this->flag,
         ]);
 
         $query->andFilterWhere(['like', 'username', $this->username])

@@ -4,6 +4,8 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Material;
+use app\models\Inventory_material;
+use app\models\MaterialSearch;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -14,7 +16,7 @@ use yii\filters\VerbFilter;
  */
 class MaterialController extends Controller
 {
-    public $layout = "user";
+    public $layout = 'user';
     public function behaviors()
     {
         return [
@@ -33,36 +35,28 @@ class MaterialController extends Controller
      */
     public function actionIndex()
     {
-        
+        if(Yii::$app->user->isGuest){
+               return $this->redirect(Yii::$app->params['base'].'web');
+            } 
+        if(Yii::$app->user->identity->role != 'user'){
+               return $this->redirect(Yii::$app->params['base'].'web');
+            }
+   //     $searchModel = new MaterialSearch();
+       $query = Material::find()->select('*')
+                                ->where(['flag'=>1])
+                                ;
+
         $dataProvider = new ActiveDataProvider([
-            'query' => Material::find(),
+            'query' => $query,
+             'sort'=> ['defaultOrder' => ['id_material'=>SORT_DESC]]
         ]);
+
 
         return $this->render('index', [
+     //       'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
-    public function actionUpdatepage()
-    {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Material::find(),
-        ]);
-
-        return $this->render('updatePage', [
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-    public function actionDeletepage()
-    {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Material::find(),
-        ]);
-
-        return $this->render('deletePage', [
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
 
     /**
      * Displays a single Material model.
@@ -71,6 +65,12 @@ class MaterialController extends Controller
      */
     public function actionView($id)
     {
+        if(Yii::$app->user->isGuest){
+               return $this->redirect(Yii::$app->params['base'].'web');
+            } 
+        if(Yii::$app->user->identity->role != 'user'){
+               return $this->redirect(Yii::$app->params['base'].'web');
+            }
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -83,10 +83,23 @@ class MaterialController extends Controller
      */
     public function actionCreate()
     {
+        if(Yii::$app->user->isGuest){
+               return $this->redirect(Yii::$app->params['base'].'web');
+            } 
+        if(Yii::$app->user->identity->role != 'user'){
+               return $this->redirect(Yii::$app->params['base'].'web');
+            }
         $model = new Material();
-
+        $model->flag = 1;
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index', 'id' => $model->id_material, 'nama' => $model->nama]);
+			
+			$model2 = new Inventory_material();
+            $model2->batas_min = 0;
+            $model2->total = 0;
+            $model2->id_material = $model->id_material;
+            if($model2->save()){
+              return $this->redirect(['index', 'create' => $model->nama]);
+            }
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -102,10 +115,18 @@ class MaterialController extends Controller
      */
     public function actionUpdate($id)
     {
+        if(Yii::$app->user->isGuest){
+               return $this->redirect(Yii::$app->params['base'].'web');
+            } 
+        if(Yii::$app->user->identity->role != 'user'){
+               return $this->redirect(Yii::$app->params['base'].'web');
+            }
+
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['updatepage', 'id' => $model->id_material,'nama' => $model->nama]);
+
+            return $this->redirect(['index', 'update' => $model->nama]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -121,9 +142,23 @@ class MaterialController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if(Yii::$app->user->isGuest){
+               return $this->redirect(Yii::$app->params['base'].'web');
+            } 
+        if(Yii::$app->user->identity->role != 'user'){
+               return $this->redirect(Yii::$app->params['base'].'web');
+            }
 
-        return $this->redirect(['deletepage','nama' => $id]);
+        $model = $this->findModel($id);
+        $model->flag = 0;
+       if ($model->save()) {
+
+            return $this->redirect(['index', 'delete' => $model->nama]);
+        } else {
+            return $this->render('index', [
+                'model' => $model,
+            ]);
+        }
     }
 
     /**
@@ -135,6 +170,12 @@ class MaterialController extends Controller
      */
     protected function findModel($id)
     {
+        if(Yii::$app->user->isGuest){
+               return $this->redirect(Yii::$app->params['base'].'web');
+            } 
+        if(Yii::$app->user->identity->role != 'user'){
+               return $this->redirect(Yii::$app->params['base'].'web');
+            }
         if (($model = Material::findOne($id)) !== null) {
             return $model;
         } else {
